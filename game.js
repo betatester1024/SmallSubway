@@ -169,9 +169,10 @@ function togglePause() {
   paused = !paused;
   redraw();
   if (!paused) {
-    // byId("timings").innerText = currSpeed == 2?""
+    byId("timings").innerText = "pause"
     requestAnimationFrame(tickLoop);
   }
+  else byId("timings").innerText = "play_arrow" 
 }
 
 function getNextStop(currTrain, actQ=true) {
