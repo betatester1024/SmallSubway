@@ -165,6 +165,10 @@ function ingametime() {
   return {m:mins%60, h:hrs%24, d:days%365, y:Math.floor(days/365)};
 }
 
+function updateIndicators() {
+  if (paused) byId("timings").innerText = "play_arrow"
+  else byId("timings").innerText = "pause"
+}
 function togglePause() {
   paused = !paused;
   redraw();
@@ -256,6 +260,7 @@ function preLoad() {
     if (vis()) document.title = "thing";
     else {
       paused = true;
+      updateIndicators();
       openDialog(K.DIALOG_TIME);
       document.title = "thing (paused)"
     }
