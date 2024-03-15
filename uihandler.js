@@ -1,6 +1,7 @@
 K.DIALOG_TIME = 0;
 K.DIALOG_SHOP = 1;
-let dialogIDs = ["timeMenu", "upgrades"]
+K.DIALOG_SCORE = 2;
+let dialogIDs = ["timeMenu", "upgrades", "stats"]
 function toggleDialog(toOpen) {
   for (let id of dialogIDs) {
     let dialog = byId(id);
@@ -14,6 +15,14 @@ function toggleDialog(toOpen) {
 
 
   }
+}
+
+function reportScores() {
+  toggleDialog(K.DIALOG_SCORE);
+  byId("statsInner").innerHTML = `
+  You served ${passengersServed} passengers over a span of
+  ${ingametime().y} years and ${ingametime().d} days ( 
+  ${toTime(globalTicks)}), netting a profit of $${(balance/1000).toFixed(2)}m!`;
 }
 
 function openDialog(toOpen) {

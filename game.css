@@ -20,7 +20,9 @@ details {
   content: "+"
 }
 
-
+#timings {
+  font-family: "Material Symbols Outlined";
+}
 
 .btn .TOOLTIP {
   display: none;

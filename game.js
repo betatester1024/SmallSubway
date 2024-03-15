@@ -169,6 +169,7 @@ function togglePause() {
   paused = !paused;
   redraw();
   if (!paused) {
+    // byId("timings").innerText = currSpeed == 2?""
     requestAnimationFrame(tickLoop);
   }
 }
@@ -300,6 +301,7 @@ function preLoad() {
 function animLoop() {
   if (currSpeed < 0.05 && !lostQ) {
     lostQ = true;
+    reportScores();
     alertDialog("You lost!", ()=>{});
   }
   let delta = Date.now() - startTime;
