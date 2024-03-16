@@ -127,7 +127,7 @@ div#topBar {
   width: calc(100% - 20px);
   background-color: var(--system-grey3);
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   row-gap: 7px;
   column-gap: 10px;
 }

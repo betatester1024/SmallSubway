@@ -188,7 +188,7 @@ function onmove(ev) {
         // if the stop that we're extending is the at the end, then add at the end
         if (currLine.path[currLine.path.length-1] == extendInfo.stop) {
           currLine.path.push(nStop);
-          logData.push("line extension #0 (type",nStop.type+")");
+          logData.push("line extension #0 (type"+nStop.type+")");
           prtLine();
         }
         // otherwise the line we're extending must be the first stop

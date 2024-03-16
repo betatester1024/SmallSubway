@@ -115,7 +115,7 @@ let maxUnlockedType = 0;
 const acceptRadius = 30;
 const stopSz = 17;
 
-let nextMilestone = 20;
+let nextMilestone = 500000;
 
 let adj = [];
 
@@ -123,13 +123,14 @@ let adj = [];
 
 let defaultClr = "#555";
 let linesAvailable = 3;
-const colours = ["green", "yellow", "blue", "orange", "purple", "grey"];
-let DEBUG = true;
+let colours = ["green", "yellow", "blue", "orange", "purple", "grey"];
+let DEBUG = false;
 
 let prevYear = 1;
 let globalTicks = 0;
 let currSpeed = 1;
-let offsetDelta = 0; // from saved time
+
+const fcns = [stopPopulationLoop, handleAwaiting];
 
 function onLoad() {
 
@@ -301,7 +302,7 @@ function preLoad() {
   requestAnimationFrame(animLoop);
   startTick = timeNow();
   startTime = Date.now();
-  asyncEvents.push({fcn:stopPopulationLoop, time:timeNow()+10000});
+  asyncEvents.push({fcn:0, args:[], time:timeNow()+10000});
 }
 
 function animLoop() {
@@ -334,7 +335,7 @@ function tickLoop() {
   else currPopulationPool = basePopulationPool;
   for (let i=0; i<asyncEvents.length; i++) {
     if (timeNow() >= asyncEvents[i].time) {
-      asyncEvents[i].fcn();
+      fcns[asyncEvents[i].fcn](...asyncEvents[i].args);
       asyncEvents.splice(i, 1);
       i--;
     } 
@@ -538,7 +539,7 @@ function handleAwaiting(currTrain, currStop) {
       if (currStop.waiting.length < currStop.capacity)
         currStop.failing =false;
       pass.actionStatus = K.NOACTION;
-      passengersServed+= Math.floor(7+Math.random()*3);
+      passengersServed+= Math.floor(70000+Math.random()*30000);
       handled = true;
       break;
     }
@@ -581,7 +582,8 @@ function handleAwaiting(currTrain, currStop) {
   }
   if (handled) {
 
-    let toCall = {fcn:()=>{handleAwaiting(currTrain, currStop)}, time:timeNow()+K.DELAYPERPASSENGER};
+    let toCall = {fcn:1, args:[currTrain, currStop], 
+                  time:timeNow()+K.DELAYPERPASSENGER};
     asyncEvents.push(toCall);
   }
   else {
@@ -629,7 +631,7 @@ function dropOff(currTrain, pt) {
 function stopPopulationLoop() {
   populateStops();
   redraw();
-  asyncEvents.push({fcn:stopPopulationLoop, time:timeNow()+(5000 + Math.random() * 7000)});
+  asyncEvents.push({fcn:0, args:[], time:timeNow()+(5000 + Math.random() * 7000)});
 }
 
 
